@@ -1,0 +1,8 @@
+# Ignore all directories
+*/
+
+# Keep all files (including in the root)
+!/*
+
+# If you have specific files in subfolders you want to keep, you can "unignore" them:
+# !somefolder/somefile.txt
