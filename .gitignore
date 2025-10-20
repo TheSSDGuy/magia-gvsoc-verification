@@ -1,5 +1,5 @@
 # Ignore all directories
-*/
+*/*
 
 # Keep all files (including in the root)
 !/*

@@ -1,3 +1,21 @@
+# Copyright (C) 2025 Fondazione Chips-IT
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+
+# Authors: Lorenzo Zuolo, Chips-IT (lorenzo.zuolo@chips.it)
+
 #!/bin/bash
 
 # --------------------------------------
@@ -5,13 +23,13 @@
 # --------------------------------------
 
 # Set user gvsoc path 
-GVSOC_PATH="/home/gvsoc/Documents/test/gvsoc"
+GVSOC_PATH="/home/gvsoc/Documents/gvsoc"
 # Set user magia-sdk path
 MAGIA_SDK_PATH="/home/gvsoc/Documents/magia-sdk"
 # Set the magia-sdk compilation toolchain
 COMPILER=GCC_MULTILIB
 # Set the list of mesh configuration to test. E.g., TILES="2 4" or TILES="2"
-TILES="2 4"
+TILES="2"
 # Set the simulation timeout
 TIMEOUT="240"
 # Set the list of error messages to search in the simulation logs
