@@ -23,17 +23,17 @@
 # --------------------------------------
 
 # Set user gvsoc path 
-GVSOC_PATH="/home/gvsoc/Documents/gvsoc"
+GVSOC_PATH="/home/gvsoc/Documents/merge_folder/gvsoc"
 # Set user magia-sdk path
 MAGIA_SDK_PATH="/home/gvsoc/Documents/magia-sdk"
 # Set the magia-sdk compilation toolchain
-COMPILER=GCC_MULTILIB
+COMPILER=GCC_PULP
 # Set the list of mesh configuration to test. E.g., TILES="2 4" or TILES="2"
-TILES="2"
+TILES="2 4 8"
 # Set the simulation timeout
-TIMEOUT="240"
+TIMEOUT="120"
 # Set the list of error messages to search in the simulation logs
-ERROR_PATTERNS=("Segmentation fault" "Aborted (core dumped)")
+ERROR_PATTERNS=("Segmentation fault" "Aborted (core dumped)" "Input error")
 # --------------------------------------
 
 # Default: both phases are on
@@ -94,6 +94,12 @@ if [ $RUN_SIMULATION -eq 1 ]; then
             test_name=$(basename "$test_bin_path")
             echo "Running GVSoC on test $test_name"
             timeout $TIMEOUT ./install/bin/gvsoc --target=magia --binary=$test_bin_path --trace-level=trace run > $mesh_path/gvsoc-run_$test_name.log 2>&1
+            exit_code=$?
+
+            # If timeout triggered (exit code 124)
+            if [ $exit_code -eq 124 ]; then
+                echo "TIMEOUT" >> $mesh_path/gvsoc-run_$test_name.log
+            fi
         done
 
         echo "Going back to verification path: $CWD"
@@ -121,7 +127,7 @@ if [ $RUN_VERIFY -eq 1 ]; then
         for log in "$mesh_path"/gvsoc-run_*.log; do
             test_name=$(basename "$log" .log)
 
-            if [ ! -s "$log" ]; then
+            if grep -q "TIMEOUT" "$log"; then
                 echo "⚠️  $log is empty → simulation not ended (TIMEOUT-EXPIRED or GVSoC STUCK)"
                 failed_tests+=("$test_name")
                 all_failed_tests+=("$test_name")
